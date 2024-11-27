@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vinho Bom</title>
+    <style>
+      body {
+        margin: 0;
+        background-image: url('https://www.santarita.com/wp-content/uploads/2018/08/header-QuienesSomos-1600x797.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .cartao-container {
+        position: relative;
+        width: 300px;
+        height: 500px;
+        perspective: 1000px;
+      }
+
+      .cartao {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.1s, box-shadow 0.1s;
+        will-change: transform, box-shadow;
+        transform-origin: center;
+        border-radius: 20px;
+      }
+
+      .cartao .frente,
+      .cartao .verso {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5em;
+        color: white;
+        transform-origin: center;
+        background-size: cover;
+        background-position: center;
+      }
+
+      .cartao .frente {
+        background-image: url('https://lh3.googleusercontent.com/pw/AP1GczNVqWTb3rXKijzDrb-qvSpiG0pxzkFsX5GUtRXE-L2Q3VIoS6SW9s3TsI513u4do-gMh-2dvJzuG_RLYliaUefAQLsudzELfrmL2NYQwMuQck6bn4zO67IMq4vuxNRrZmaUiQysJYQjLj4FCL5dGto=w646-h911-s-no-gm');
+      }
+
+      .cartao .verso {
+        background-image: url('https://i.pinimg.com/736x/60/bb/1b/60bb1bc55a3b65c70d1a228c82024ee9.jpg');
+        transform: rotateY(180deg);
+      }
+
+      @media (min-width: 768px) {
+        .cartao-container {
+          width: 350px; /* Dobro do tamanho para telas maiores */
+          height: 750px; /* Dobro da altura para telas maiores */
+        }
+      }
+    </style>
+  </head>
+  <script>
+    let docTitle = document.title;
+
+    window.addEventListener("blur", () => {
+      document.title = "Volte... 🥲";
+    });
+
+    window.addEventListener("focus", () => {
+      document.title = docTitle;
+    });
+  </script>
+  <body>
+    <div class="cartao-container">
+      <div class="cartao" id="cartao">
+        <div class="frente"></div>
+        <div class="verso"></div>
+      </div>
+    </div>
+
+    <script>
+      const cartao = document.getElementById('cartao');
+      let isFlipped = false;
+
+      function applyRotation(x, y) {
+        const { left, top, width, height } = cartao.getBoundingClientRect();
+        const centerX = left + width / 2;
+        const centerY = top + height / 2;
+        const deltaX = x - centerX;
+        const deltaY = y - centerY;
+
+        const maxDistance = 150;
+        const clampedDeltaX = Math.min(Math.max(deltaX, -maxDistance), maxDistance);
+        const clampedDeltaY = Math.min(Math.max(deltaY, -maxDistance), maxDistance);
+
+        const rotationX = -(clampedDeltaY / (height / 2)) * 25;
+        const rotationY = (clampedDeltaX / (width / 2)) * 25;
+
+        if (isFlipped) {
+          cartao.style.transform = `rotateY(180deg) rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+        } else {
+          cartao.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+        }
+      }
+
+      document.addEventListener('mousemove', (e) => {
+        applyRotation(e.clientX, e.clientY);
+      });
+
+      let touchStartX = 0;
+      let touchStartY = 0;
+
+      document.addEventListener('touchstart', (e) => {
+        const touch = e.touches[0];
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+      });
+
+      document.addEventListener('touchmove', (e) => {
+        const touch = e.touches[0];
+        const touchX = touch.clientX;
+        const touchY = touch.clientY;
+        applyRotation(touchX, touchY);
+        e.preventDefault();
+      });
+
+      cartao.addEventListener('click', () => {
+        isFlipped = !isFlipped;
+        if (isFlipped) {
+          cartao.style.transition = 'transform 0.1s';
+          cartao.style.transform = 'rotateY(180deg)';
+        } else {
+          cartao.style.transition = 'transform 0.1s';
+          cartao.style.transform = 'rotateY(0deg)';
+        }
+      });
+    </script>
+  </body>
+</html>
