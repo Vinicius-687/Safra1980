@@ -1,77 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vinho Bom</title>
-    <style>
-      body {
-        margin: 0;
-        background-image: url('https://www.santarita.com/wp-content/uploads/2018/08/header-QuienesSomos-1600x797.jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        overflow: hidden;
-      }
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+<link rel="icon" type="image/png" href="https://github.com/Vinicius-687/Viniws7_/blob/main/Icon.png?raw=true">
+<title>Surpresaaaa</title>
+<style>
+  html,body{
+    margin:0;
+    padding:0;
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+    background:url('https://www.santarita.com/wp-content/uploads/2018/08/header-QuienesSomos-1600x797.jpg')no-repeat center/cover;
+    font-family:Arial, sans-serif;
+    user-select:none;
+    touch-action:none;
+}
 
-      .cartao-container {
-        position: relative;
-        width: 300px;
-        height: 500px;
-        perspective: 1000px;
-      }
+  .escala-wrapper{
+    position:absolute;
+    inset:0;
+    display:none;
+    perspective:1000px;
+    touch-action:none;
+}
+  .cartao{
+    position:absolute;
+    transform-style:preserve-3d;
+    transition:transform 0.14s ease;
+    will-change:transform;
+    border-radius:15px;
+    top:0;left:0;
+    z-index: 10;
+}
+  .cartao img{
+    position:absolute;
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    border-radius:15px;
+    backface-visibility:hidden;
+}
+  .cartao .verso{
+    transform:rotateY(180deg);
+}
+  #btnSair{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    padding:10px 20px;
+    border-radius:8px;
+    background:rgba(0,0,0,0.7);
+    color:#fff;
+    border:none;
+    display:none;
+    z-index:10000
+}
+  #startScreen{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.8);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:2rem;
+    z-index:9999;
+    cursor:pointer;
+    text-align:center;
+    touch-action:manipulation
+}
+  #tutorial{
+    position:fixed;
+    top:10px;
+    right:10px;
+    background:rgba(0,0,0,0.7);
+    color:#fff;
+    font-size:.9rem;
+    padding:10px;
+    border-radius:8px;
+    z-index:1;
+    line-height:1.3;
+    max-width:200px;
+    pointer-events:none
+}
+</style>
+</head>
+<body>
 
-      .cartao {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        transform-style: preserve-3d;
-        transition: transform 0.1s, box-shadow 0.1s;
-        will-change: transform, box-shadow;
-        transform-origin: center;
-        border-radius: 20px;
-      }
+<div id="startScreen">Clique para ver o Convite</div>
 
-      .cartao .frente,
-      .cartao .verso {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        backface-visibility: hidden;
-        border-radius: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.5em;
-        color: white;
-        transform-origin: center;
-        background-size: cover;
-        background-position: center;
-      }
+<div class="escala-wrapper" id="escalaWrapper">
 
-      .cartao .frente {
-        background-image: url('https://lh3.googleusercontent.com/pw/AP1GczNVqWTb3rXKijzDrb-qvSpiG0pxzkFsX5GUtRXE-L2Q3VIoS6SW9s3TsI513u4do-gMh-2dvJzuG_RLYliaUefAQLsudzELfrmL2NYQwMuQck6bn4zO67IMq4vuxNRrZmaUiQysJYQjLj4FCL5dGto=w646-h911-s-no-gm');
-      }
+  <div id="tutorial">➤ Use 1 dedo para rotacionar o cartão<br>➤ Use 2 dedos para dar zoom e mover o cartão</div>
 
-      .cartao .verso {
-        background-image: url('https://i.pinimg.com/736x/60/bb/1b/60bb1bc55a3b65c70d1a228c82024ee9.jpg');
-        transform: rotateY(180deg);
-      }
+  <div class="cartao" id="cartao">
+    <img class="frente" src="https://lh3.googleusercontent.com/pw/AP1GczNVqWTb3rXKijzDrb-qvSpiG0pxzkFsX5GUtRXE-L2Q3VIoS6SW9s3TsI513u4do-gMh-2dvJzuG_RLYliaUefAQLsudzELfrmL2NYQwMuQck6bn4zO67IMq4vuxNRrZmaUiQysJYQjLj4FCL5dGto=w646-h911-s-no-gm" alt="Frente">
+    <img class="verso" src="https://i.pinimg.com/736x/60/bb/1b/60bb1bc55a3b65c70d1a228c82024ee9.jpg" alt="Verso">
+  </div>
 
-      @media (min-width: 768px) {
-        .cartao-container {
-          width: 350px; /* Dobro do tamanho para telas maiores */
-          height: 750px; /* Dobro da altura para telas maiores */
-        }
-      }
-    </style>
-  </head>
-  <script>
-    let docTitle = document.title;
+</div>
+
+<button id="btnSair">Sair</button>
+<audio id="flipSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8f7dbb4e3a.mp3?filename=flip-card-1.mp3"></audio>
+
+<script>
+
+/* -----------Titulo DInâmico----------*/
+        let docTitle = document.title;
 
     window.addEventListener("blur", () => {
       document.title = "Volte... 🥲";
@@ -80,71 +117,237 @@
     window.addEventListener("focus", () => {
       document.title = docTitle;
     });
-  </script>
-  <body>
-    <div class="cartao-container">
-      <div class="cartao" id="cartao">
-        <div class="frente"></div>
-        <div class="verso"></div>
-      </div>
-    </div>
 
-    <script>
-      const cartao = document.getElementById('cartao');
-      let isFlipped = false;
 
-      function applyRotation(x, y) {
-        const { left, top, width, height } = cartao.getBoundingClientRect();
-        const centerX = left + width / 2;
-        const centerY = top + height / 2;
-        const deltaX = x - centerX;
-        const deltaY = y - centerY;
+/* ---------- elementos ---------- */
+const startScreen = document.getElementById('startScreen');
+const escalaWrapper = document.getElementById('escalaWrapper');
+const cartao = document.getElementById('cartao');
+const btnSair = document.getElementById('btnSair');
+const tutorial = document.getElementById('tutorial');
+const flipSound = document.getElementById('flipSound');
 
-        const maxDistance = 150;
-        const clampedDeltaX = Math.min(Math.max(deltaX, -maxDistance), maxDistance);
-        const clampedDeltaY = Math.min(Math.max(deltaY, -maxDistance), maxDistance);
+/* ---------- Tutorial ---------- */
+function atualizarTutorial() {
+    if (btnSair.classList.contains("ativo")) { 
+        tutorial.style.display = "flex"; 
+    } else {
+        tutorial.style.display = "none";
+    }
+}
+document.addEventListener("fullscreenchange", () => {
+    if (!document.fullscreenElement) {
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                btnSair.click();
+            });
+        });
+    }
+});
 
-        const rotationX = -(clampedDeltaY / (height / 2)) * 25;
-        const rotationY = (clampedDeltaX / (width / 2)) * 25;
+// Sempre chame isso quando alterar o estado do botão de sair
+atualizarTutorial();
 
-        if (isFlipped) {
-          cartao.style.transform = `rotateY(180deg) rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
-        } else {
-          cartao.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
-        }
-      }
 
-      document.addEventListener('mousemove', (e) => {
-        applyRotation(e.clientX, e.clientY);
-      });
+/* ---------- estado ---------- */
+let isFlipped = false;
+let posX = 0, posY = 0, escalaZoom = 1;
 
-      let touchStartX = 0;
-      let touchStartY = 0;
+/* ---------- helper de transform ---------- */
+function resetTransform(rotX = 0, rotY = 0){
+  const flip = isFlipped ? 'rotateY(360deg)' : 'rotateY(180deg)';
+  cartao.style.transform = `translate(${posX}px, ${posY}px) ${flip} scale(${escalaZoom}) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+}
 
-      document.addEventListener('touchstart', (e) => {
-        const touch = e.touches[0];
-        touchStartX = touch.clientX;
-        touchStartY = touch.clientY;
-      });
+/* ---------- ajustar tamanho inicial ---------- */
+function ajustarDimensoesDoCartao(){
+  const img = new Image();
+  img.onload = ()=>{
+    const maxW = window.innerWidth * 0.9;
+    const maxH = window.innerHeight * 0.9;
+    let w = img.width, h = img.height, ratio = w/h;
+    if (w > maxW) { w = maxW; h = w/ratio; }
+    if (h > maxH) { h = maxH; w = h*ratio; }
+    cartao.style.width = w+'px'; cartao.style.height = h+'px';
+    posX = (window.innerWidth - w)/2; posY = (window.innerHeight - h)/2; escalaZoom = 1;
+    escalaWrapper.style.display = 'block'; btnSair.style.display = 'block'; tutorial.style.display = 'block';
+    resetTransform();
+  };
+  img.src = cartao.querySelector('.frente').src;
+}
 
-      document.addEventListener('touchmove', (e) => {
-        const touch = e.touches[0];
-        const touchX = touch.clientX;
-        const touchY = touch.clientY;
-        applyRotation(touchX, touchY);
-        e.preventDefault();
-      });
+/* ---------- startScreen abre o convite (toque curto) ---------- */
+let sDownX=0, sDownY=0;
+startScreen.addEventListener('pointerdown', e => { e.preventDefault(); sDownX = e.clientX; sDownY = e.clientY; });
+startScreen.addEventListener('pointerup', e => {
+  if (Math.abs(e.clientX - sDownX) < 8 && Math.abs(e.clientY - sDownY) < 8) {
+    document.documentElement.requestFullscreen?.().catch(()=>{});
+    startScreen.style.display = 'none';
+    ajustarDimensoesDoCartao();
+    isFlipped = true;
+    resetTransform();
+    flipSound.currentTime = 0; flipSound.play();
+  }
+});
 
-      cartao.addEventListener('click', () => {
-        isFlipped = !isFlipped;
-        if (isFlipped) {
-          cartao.style.transition = 'transform 0.1s';
-          cartao.style.transform = 'rotateY(180deg)';
-        } else {
-          cartao.style.transition = 'transform 0.1s';
-          cartao.style.transform = 'rotateY(0deg)';
-        }
-      });
-    </script>
-  </body>
+/* ---------- detecta touch device ---------- */
+const isTouch = 'ontouchstart' in window;
+
+/* ---------- MOBILE: touch handlers ----------
+   - 1 dedo MOVIMENTO => tilt (rotaciona conforme posição do dedo sobre o cartão)
+   - tap curto (sem mover) => flip
+   - 2 dedos => zoom + pan (move o cartão)
+*/
+if (isTouch) {
+  let tStartX = 0, tStartY = 0, tMoved = false, tLastTouches = [], tStartTime = 0;
+
+  function centerRelativeToCard(clientX, clientY){
+    const r = cartao.getBoundingClientRect();
+    const cx = (clientX - r.left) / r.width - 0.5; // -0.5 .. 0.5
+    const cy = (clientY - r.top) / r.height - 0.5;
+    return { cx, cy };
+  }
+
+  escalaWrapper.addEventListener('touchstart', e => {
+    tStartTime = Date.now();
+    if (e.touches.length === 1) {
+      tMoved = false;
+      tStartX = e.touches[0].clientX;
+      tStartY = e.touches[0].clientY;
+      // ao começar 1 dedo, já aplicamos tilt inicial baseado na posição
+      const p = centerRelativeToCard(tStartX, tStartY);
+      resetTransform(-p.cy * 20, p.cx * 20); // 20 graus max
+    } else if (e.touches.length === 2) {
+      tMoved = true; // multitouch => não é tap
+      tLastTouches = [...e.touches];
+    }
+  }, { passive: false });
+
+  escalaWrapper.addEventListener('touchmove', e => {
+    if (e.touches.length === 1) {
+      const t = e.touches[0];
+      const dx = t.clientX - tStartX, dy = t.clientY - tStartY;
+      if (Math.abs(dx) > 6 || Math.abs(dy) > 6) tMoved = true;
+
+      // AQUI: em vez de traduzir, calculamos tilt com base na posição do dedo sobre o cartão
+      const p = centerRelativeToCard(t.clientX, t.clientY);
+      resetTransform(-p.cy * 20, p.cx * 20); // ajuste sensibilidade se quiser
+
+      tStartX = t.clientX; tStartY = t.clientY;
+      return;
+    }
+
+    if (e.touches.length === 2 && tLastTouches.length === 2) {
+      // zoom
+      const dxNow = e.touches[0].clientX - e.touches[1].clientX;
+      const dyNow = e.touches[0].clientY - e.touches[1].clientY;
+      const dNow = Math.hypot(dxNow, dyNow);
+
+      const dxPrev = tLastTouches[0].clientX - tLastTouches[1].clientX;
+      const dyPrev = tLastTouches[0].clientY - tLastTouches[1].clientY;
+      const dPrev = Math.hypot(dxPrev, dyPrev);
+
+      const delta = dNow - dPrev;
+      escalaZoom += delta * 0.005;
+      escalaZoom = Math.max(0.1, Math.min(escalaZoom, 5));
+
+      // pan médio dos dois dedos para mover o cartão
+      const prevMidX = (tLastTouches[0].clientX + tLastTouches[1].clientX)/2;
+      const prevMidY = (tLastTouches[0].clientY + tLastTouches[1].clientY)/2;
+      const nowMidX = (e.touches[0].clientX + e.touches[1].clientX)/2;
+      const nowMidY = (e.touches[0].clientY + e.touches[1].clientY)/2;
+
+      posX += (nowMidX - prevMidX) * 0.6;
+      posY += (nowMidY - prevMidY) * 0.6;
+
+      tLastTouches = [...e.touches];
+      resetTransform();
+    }
+  }, { passive: false });
+
+  escalaWrapper.addEventListener('touchend', e => {
+    if (e.touches.length > 0) return; // ainda tem dedos
+    // se não houve movimento e foi um toque curto -> flip
+    const time = Date.now() - tStartTime;
+    if (!tMoved && time < 400) {
+      isFlipped = !isFlipped;
+      resetTransform();
+      flipSound.currentTime = 0; flipSound.play();
+    } else {
+      // ao terminar movimento com 1 dedo, reset do tilt suave ao centro
+      resetTransform(0,0);
+    }
+  });
+}
+
+/* ---------- DESKTOP (mouse/pointer) ---------- */
+if (!isTouch) {
+  // right-button drag; primary click = flip when no movement; mousemove = tilt
+  let pStartX=0, pStartY=0, pMoved=false, draggingRight=false, dragOffsetX=0, dragOffsetY=0;
+  let targetRotX = 0, targetRotY = 0, curRotX = 0, curRotY = 0, anim=false;
+
+  escalaWrapper.addEventListener('pointerdown', e=>{
+    pMoved = false; pStartX = e.clientX; pStartY = e.clientY;
+    if (e.pointerType === 'mouse' && e.button === 2){
+      draggingRight = true; dragOffsetX = e.clientX - posX; dragOffsetY = e.clientY - posY;
+      try { escalaWrapper.setPointerCapture(e.pointerId); } catch {}
+      e.preventDefault();
+    }
+  });
+  escalaWrapper.addEventListener('pointermove', e=>{
+    if (Math.abs(e.clientX - pStartX) > 5 || Math.abs(e.clientY - pStartY) > 5) pMoved = true;
+    if (draggingRight) { posX = e.clientX - dragOffsetX; posY = e.clientY - dragOffsetY; resetTransform(); return; }
+  });
+  escalaWrapper.addEventListener('pointerup', e=>{
+    if (e.pointerType === 'mouse' && e.button === 2){ draggingRight = false; try{escalaWrapper.releasePointerCapture(e.pointerId)}catch{}; return; }
+    if (!pMoved){ isFlipped = !isFlipped; resetTransform(); flipSound.currentTime = 0; flipSound.play(); }
+  });
+
+  escalaWrapper.addEventListener('mousemove', e=>{
+    if (draggingRight || escalaWrapper.style.display !== 'block') return;
+    const rect = cartao.getBoundingClientRect();
+    const mx = e.clientX - rect.left, my = e.clientY - rect.top;
+    const cx = rect.width/2, cy = rect.height/2;
+    let nx = (mx - cx)/cx, ny = (my - cy)/cy;
+    const limit = 0.8; nx = Math.max(-limit, Math.min(limit, nx)); ny = Math.max(-limit, Math.min(limit, ny));
+    targetRotX = -ny * 15; targetRotY = nx * 15;
+    if (!anim) animateTilt();
+  });
+
+  function animateTilt(){
+    anim = true;
+    const s = 0.18;
+    curRotX += (targetRotX - curRotX) * s;
+    curRotY += (targetRotY - curRotY) * s;
+    resetTransform(curRotX, curRotY);
+    if (Math.abs(targetRotX - curRotX) > 0.2 || Math.abs(targetRotY - curRotY) > 0.2) requestAnimationFrame(animateTilt);
+    else anim = false;
+  }
+
+  escalaWrapper.addEventListener('wheel', e=>{
+    if (escalaWrapper.style.display !== 'block') return;
+    e.preventDefault();
+    const zoomStep = (e.ctrlKey || Math.abs(e.deltaX)>0) ? e.deltaY * -0.0025 : (e.deltaY<0 ? 0.1 : -0.1);
+    escalaZoom += zoomStep; escalaZoom = Math.max(0.1, Math.min(escalaZoom, 5)); resetTransform();
+  }, { passive:false });
+}
+
+/* ---------- UI: btn sair e fullscreen change ---------- */
+btnSair.addEventListener('click', ()=>{
+  if (document.fullscreenElement) document.exitFullscreen();
+  escalaWrapper.style.display = 'none'; btnSair.style.display = 'none'; tutorial.style.display = 'none';
+  startScreen.style.display = 'flex'; isFlipped = false;
+});
+document.addEventListener('fullscreenchange', ()=>{ if (!document.fullscreenElement) btnSair.click(); });
+
+/* ESC para fechar quando aberto */
+window.addEventListener('keydown', e=>{ if ((e.key==='Escape'||e.code==='Escape') && escalaWrapper.style.display==='block') btnSair.click(); });
+
+/* resize */
+window.addEventListener('resize', ()=>{ if (escalaWrapper.style.display==='block') ajustarDimensoesDoCartao(); });
+
+/* evita contextmenu */
+window.addEventListener('contextmenu', e => e.preventDefault());
+</script>
+</body>
 </html>
